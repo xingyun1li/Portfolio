@@ -5,13 +5,17 @@ var cookiePaser = require('cookie-parser');
 var bodyPaser = require('body-parser');
 var http = require('http');
 var debug = require('debug')('portfolio:app');
+var config = require('./config');
+var errors = require('./util/errors');
 var server;
 
 var app = express();
+var projectEnv = process.env.PROJECT_ENV || 'development';
+app.set('env', projectEnv);
+config = projectEnv == 'development'?config.development:config.production;
+debug(config);
 
-var port = process.env.PORT || '3000';
-
-app.set('port', port);
+app.set('port', config.server.port);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -27,32 +31,8 @@ app.use(function (req, res, next) {
   err.status = 404;
   next(err);
 });
-
-//error handlers
-
-//development error handler
-//will print stacktrace
-if(app.get('env') === 'development') {
-  app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-//production error handler
-//no stacktraces leaked to user
-app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
-
+errors.handleError(app);
 server = http.createServer(app);
-server.listen(port);
+server.listen(app.get('port'));
 
 module.exports = app;
