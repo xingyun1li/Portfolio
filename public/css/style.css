@@ -1,8 +1,63 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 12px;
 }
 
-a {
-  color: #00B7FF
+.sidebar {
+  width: 180px;
+  height: 100%;
+  overflow: auto;
+  display: block;
+  position: fixed;
+  top: 50px;
+  bottom: 0px;
+  background-color: #293038;
+  z-index: 102;             //TODO
+  overflow-x: hidden;       //TODO
+}
+
+.sidebar .sidebar_title {
+  height: 40px;
+  background-color: #22282e;
+  color: #ffffff;
+  line-height: 40px;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+}
+
+.sidebar .sidebar_nav {
+  width: 180px;
+}
+
+.sidebar_nav ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  overflow: hidden;
+}
+
+.sidebar_trans {
+  -webkit-transition: all 0.11s ease,0.12s ease;
+}
+
+.sidebar_nav .nav_item {
+  position: relative;
+}
+
+.sidebar_nav li a {
+  display: block;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  overflow: hidden;
+}
+
+.sidebar_nav .nav_title {
+  float: left;
+  overflow: hidden;
+  color: #ffffff;
+  white-space: nowrap;       //TODO
+  text-overflow: ellipsis;
+  display: block;
+  width: 130px;
 }
